@@ -1,11 +1,13 @@
 const productModel = require("../models/productModel")
 const ErrorHandler = require("../utils/ErrorHandler")
 const asyncErrorHandler = require("../middleware/asyncError")
+const ApiFeatures = require("../utils/features")
 
 
 // GET ALL PRODUCTS
 exports.getAllProducts = asyncErrorHandler(async (req, res) => {
-    const products = await productModel.find()
+    const apiFeatures = new ApiFeatures(productModel.find(), req.query).search().filter()
+    const products = await apiFeatures.query;
     res.status(200).json({
         success: true,
         products
@@ -56,6 +58,7 @@ exports.deleteProduct = asyncErrorHandler(async (req, res, next) => {
 // GET SINGLE PRODUCT DETAILS
 exports.getAProduct = asyncErrorHandler(async (req, res, next) => {
     let product = await productModel.findById(req.params.id)
+
 
     if (!product) {
         return next(new ErrorHandler('Product not found!!', 404))
