@@ -6,7 +6,7 @@ const sendToken = require("../utils/jwtToken")
 // const { options } = require("../routes/productroutes")
 const sendEmail = require("../utils/sendEmail")
 const crypto = require("crypto");
-
+const Product = require("../models/productModel")
 
 // register a user
 exports.registerUser = asyncErrorHandler(async (req, res, next) => {
@@ -242,7 +242,10 @@ exports.deleteUser = asyncErrorHandler(async (req, res, next) => {
 
 
     res.status(200).json({
-        success: true
+        success: true,
+        message: "User Deleted Successfully"
     })
 
 })
+
+
