@@ -17,6 +17,7 @@ exports.getAllProducts = asyncErrorHandler(async (req, res) => {
 
 // CREATE NEW PRODUCT
 exports.createProduct = asyncErrorHandler(async (req, res, next) => {
+    req.body.user = req.user.id
     const product = await productModel.create(req.body)
     res.status(201).json({
         success: true,
